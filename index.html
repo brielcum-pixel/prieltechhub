@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGUAVIDA — Tequila, Reimagined</title>
+<meta name="description" content="AGUAVIDA. 100% Blue Agave tequila from Jalisco. Four expressions. One obsession.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Archivo:wdth,wght@62..125,300;62..125,400;62..125,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<!-- GSAP + ScrollTrigger + Lenis (CDN, progressive enhancement; vanilla fallback in app.js) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<!-- Three.js (lazy-used by Bottle3D.loadGLB only; placeholder runs without it) -->
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body data-state="loading">
+
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-label" id="cursorLabel">SCROLL</span></div>
+
+<!-- LoadingScreen component -->
+<div class="loader" id="loader" role="status" aria-label="Loading Aguavida">
+  <div class="loader-inner">
+    <div class="loader-eyebrow">JALISCO — MEXICO · EST. 2026</div>
+    <h1 class="loader-word" aria-label="AGUAVIDA"><span>A</span><span>G</span><span>U</span><span>A</span><span>V</span><span>I</span><span>D</span><span>A</span></h1>
+    <div class="loader-line"><div class="loader-line-fill" id="loaderFill"></div></div>
+    <div class="loader-meta"><span>100% BLUE AGAVE</span><span id="loaderPct">00</span></div>
+  </div>
+</div>
+
+<!-- Navigation component -->
+<header class="site-head" id="siteHead">
+  <a class="brand" href="#top" data-hover="TOP">AGUAVIDA<sup>®</sup></a>
+  <nav class="head-nav" aria-label="Primary">
+    <a href="#variants" data-hover="VIEW">COLLECTION</a>
+    <a href="#origin" data-hover="VIEW">STORY</a>
+    <a href="#making" data-hover="VIEW">CRAFT</a>
+    <a href="#contact" data-hover="VIEW">CONTACT</a>
+    <a href="#final" class="shop-link" data-hover="SHOP">SHOP</a>
+  </nav>
+  <div class="head-right"><span class="head-dot"></span><span>40% ALC / VOL</span>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu"><i></i><i></i></button>
+  </div>
+</header>
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-bg"></div>
+  <nav class="menu-links">
+    <a href="#top"><em>01</em><span>Opening</span></a>
+    <a href="#bottle"><em>02</em><span>The Bottle</span></a>
+    <a href="#variants"><em>03</em><span>Variants</span></a>
+    <a href="#origin"><em>04</em><span>Origin</span></a>
+    <a href="#making"><em>05</em><span>Making</span></a>
+    <a href="#ensemble"><em>06</em><span>Collection</span></a>
+    <a href="#statement"><em>07</em><span>Statement</span></a>
+    <a href="#final"><em>08</em><span>Discover</span></a>
+  </nav>
+  <div class="menu-foot"><span>HECHO EN MÉXICO</span><span>N 20°41′ — W 102°20′</span></div>
+</div>
+
+<div class="scroll-progress"><div id="scrollProgressFill"></div></div>
+<div class="side-rail left">AGUAVIDA — TEQUILA REIMAGINED</div>
+<div class="side-rail right">SCROLL TO ENTER THE FILM — <span id="scrollPct">000</span></div>
+
+<main id="top">
+
+  <!-- ================= SECTION 01 — OPENING ================= -->
+  <section class="act act-opening" id="opening" data-scene="opening">
+    <div class="opening-sticky" id="openingSticky">
+      <div class="opening-bg" id="openingBg"></div>
+      <p class="eyebrow eyebrow-center" data-opening="eyebrow">N°01 — A CONTEMPORARY TEQUILA HOUSE</p>
+      <h2 class="opening-title" aria-label="Tequila Reimagined">
+        <span class="line line-top" data-opening="lineTop"><span>TEQUILA,</span></span>
+        <span class="line line-bottom" data-opening="lineBottom"><span><em>Reimagined.</em></span></span>
+      </h2>
+      <div class="hero-bottle-wrap" data-opening="bottle">
+        <!-- Bottle3D slot: BLANCO HERO. See app.js Bottle3D class for GLB swap. -->
+        <div class="bottle-slot" data-glb="assets/bottles/blanco.glb" data-variant="blanco" data-lighting="studio-soft" data-environment="ivory-cyc" data-hover="ROTATE">
+          <div class="bottle-3d"><div class="bottle-3d-inner" data-bottle3d="hero">
+            <div class="pbottle pbottle--clear">
+              <div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+              <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-highlight secondary"></div>
+                <div class="pbottle-label"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Blanco</span><span class="pl-sub">100% AGAVE AZUL</span></div>
+                <div class="pbottle-back-label"></div></div>
+              <div class="pbottle-shadow"></div>
+              <div class="pbottle-tag">BOTTLE PLACEHOLDER — 750 ML · 1:1 SCALE · SWAP VIA data-glb</div>
+            </div>
+          </div></div>
+          <div class="bottle-ring" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="opening-meta">
+        <div data-opening="metaL">100% BLUE AGAVE<br>JALISCO HIGHLANDS</div>
+        <div class="scroll-hint" data-opening="metaC"><span class="scroll-hint-line"></span>SCROLL</div>
+        <div data-opening="metaR">SMALL BATCH<br>ESTATE DISTILLED</div>
+      </div>
+      <div class="opening-big-index" data-opening="index" aria-hidden="true">01</div>
+    </div>
+    <div class="opening-scrollspace" aria-hidden="true"></div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee-track">
+    <span>100% BLUE AGAVE&ensp;—&ensp;HECHO EN MÉXICO&ensp;—&ensp;ESTATE DISTILLED&ensp;—&ensp;AGUAVIDA&ensp;—&ensp;</span>
+    <span>100% BLUE AGAVE&ensp;—&ensp;HECHO EN MÉXICO&ensp;—&ensp;ESTATE DISTILLED&ensp;—&ensp;AGUAVIDA&ensp;—&ensp;</span>
+  </div></div>
+
+  <!-- ================= SECTION 02 — THE BOTTLE ================= -->
+  <section class="act act-bottle" id="bottle" data-scene="bottle">
+    <div class="bottle-sticky" id="bottleSticky">
+      <div class="bottle-stage-bg" id="bottleStageBg"></div>
+      <div class="bottle-stage-head">
+        <p class="eyebrow light">N°02 — THE OBJECT · SCROLL = ROTATION</p>
+        <div class="angle-readout"><span id="angleDeg">000°</span><label>ROTATION · <span id="veloRead">0.0</span> VELOCITY</label></div>
+      </div>
+      <div class="bottle-stage-grid">
+        <div class="bottle-caption cap-left">
+          <div class="cap-step" data-cap="0"><h3>Front.<br><em>Face to face.</em></h3><p>Flint glass. Zero tint. A label set like a colophon.</p></div>
+          <div class="cap-step" data-cap="1"><h3>Three-quarter.<br><em>The shoulder turns.</em></h3><p>Hand-finished lip. Light moves across, never through.</p></div>
+        </div>
+        <div class="bottle-center">
+          <div class="bottle-slot large" data-glb="assets/bottles/blanco.glb" data-variant="blanco" data-lighting="single-hard" data-environment="black-void" data-hover="DRAG">
+            <div class="bottle-3d"><div class="bottle-3d-inner" data-bottle3d="stage">
+              <div class="pbottle pbottle--clear pbottle--xl">
+                <div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+                <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-highlight secondary"></div>
+                  <div class="pbottle-label"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Blanco</span><span class="pl-sub">100% AGAVE AZUL</span></div>
+                  <div class="pbottle-back-label"></div></div>
+                <div class="pbottle-shadow"></div>
+                <div class="pbottle-tag">BOTTLE PLACEHOLDER — SCROLL TO ROTATE · 0–100%</div>
+              </div>
+            </div></div>
+          </div>
+          <div class="stage-scale"><span>SCALE 1:1</span><div class="stage-scale-bar"><i id="stageScaleFill"></i></div><span id="stageScalePct">90%</span></div>
+        </div>
+        <div class="bottle-caption cap-right">
+          <div class="cap-step" data-cap="2"><h3>Profile.<br><em>Edge &amp; spine.</em></h3><p>A straight spine, shoulder to punt. One hard light.</p></div>
+          <div class="cap-step" data-cap="3"><h3>Back.<br><em>Then, silence.</em></h3><p>Lot number blind-embossed. Nothing else.</p></div>
+        </div>
+      </div>
+      <div class="bottle-progress">
+        <button data-goto="0" class="on">00 — FRONT</button><button data-goto="0.33">25 — TURN</button>
+        <button data-goto="0.66">50 — ¾ VIEW</button><button data-goto="1">100 — BACK</button>
+        <div class="bottle-progress-track"><i id="bottleProgressFill"></i></div>
+      </div>
+      <ul class="spec-strip"><li>FLINT GLASS</li><li>750 ML</li><li>40% ALC/VOL</li><li>HAND CORK</li><li>LOT N° 001</li></ul>
+    </div>
+    <div class="bottle-scrollspace" aria-hidden="true"></div>
+  </section>
+
+  <!-- ================= SECTION 03 — PRODUCT VARIANTS (horizontal gallery) ================= -->
+  <section class="act act-variants" id="variants" data-scene="variants">
+    <div class="variants-sticky" id="variantsSticky">
+      <div class="variants-bg" id="variantsBg"></div>
+      <div class="variants-head">
+        <p class="eyebrow light">N°03 — FOUR EXPRESSIONS · KEEP SCROLLING →</p>
+        <div class="variants-count"><span id="variantNum">01</span> / 04 — <span id="variantName">BLANCO</span></div>
+      </div>
+      <!-- ScrollScene: vertical scroll drives horizontal track -->
+      <div class="variants-track" id="variantsTrack">
+        <article class="vchapter is-blanco" data-variant="blanco" data-theme="ivory" data-glb="assets/bottles/blanco.glb">
+          <div class="vchapter-text"><span class="vchapter-no">VARIANT 01</span><h3>Blanco</h3>
+            <p>Unaged. Steel-rested 60 days. Lime leaf, white pepper, wet stone — the estate, undressed.</p>
+            <span class="vchapter-meta">STEEL · 60 DAYS · $58</span></div>
+          <div class="vchapter-bottle"><div class="bottle-slot" data-glb="assets/bottles/blanco.glb" data-variant="blanco" data-hover="VIEW">
+            <div class="bottle-3d"><div class="bottle-3d-inner" data-bottle3d="v-blanco">
+              <div class="pbottle pbottle--clear"><div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+              <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-highlight secondary"></div>
+              <div class="pbottle-label"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Blanco</span><span class="pl-sub">100% AGAVE AZUL</span></div><div class="pbottle-back-label"></div></div>
+              <div class="pbottle-shadow"></div><div class="pbottle-tag">PLACEHOLDER — BLANCO · CLEAR</div></div>
+            </div></div></div></div>
+        </article>
+        <article class="vchapter is-reposado" data-variant="reposado" data-theme="gold" data-glb="assets/bottles/reposado.glb">
+          <div class="vchapter-text"><span class="vchapter-no">VARIANT 02</span><h3>Reposado</h3>
+            <p>Seven months, French oak. Baked agave, honey, dry straw. Softer — never sweeter.</p>
+            <span class="vchapter-meta">FRENCH OAK · 7 MO · $72</span></div>
+          <div class="vchapter-bottle"><div class="bottle-slot" data-glb="assets/bottles/reposado.glb" data-variant="reposado" data-hover="VIEW">
+            <div class="bottle-3d"><div class="bottle-3d-inner" data-bottle3d="v-reposado">
+              <div class="pbottle pbottle--gold"><div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+              <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-highlight secondary"></div>
+              <div class="pbottle-label dark"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Reposado</span><span class="pl-sub">7 MESES · ROBLE FRANCÉS</span></div><div class="pbottle-back-label"></div></div>
+              <div class="pbottle-shadow"></div><div class="pbottle-tag">PLACEHOLDER — REPOSADO · PALE GOLD</div></div>
+            </div></div></div></div>
+        </article>
+        <article class="vchapter is-anejo" data-variant="anejo" data-theme="amber" data-glb="assets/bottles/anejo.glb">
+          <div class="vchapter-text"><span class="vchapter-no">VARIANT 03</span><h3>Añejo</h3>
+            <p>Eighteen months. Dried fig, cacao, leather. Amber in the glass, low light in the mouth.</p>
+            <span class="vchapter-meta">FRENCH OAK · 18 MO · $98</span></div>
+          <div class="vchapter-bottle"><div class="bottle-slot" data-glb="assets/bottles/anejo.glb" data-variant="anejo" data-hover="VIEW">
+            <div class="bottle-3d"><div class="bottle-3d-inner" data-bottle3d="v-anejo">
+              <div class="pbottle pbottle--amber"><div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+              <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-highlight secondary"></div>
+              <div class="pbottle-label dark"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Añejo</span><span class="pl-sub">18 MESES · ROBLE FRANCÉS</span></div><div class="pbottle-back-label"></div></div>
+              <div class="pbottle-shadow"></div><div class="pbottle-tag">PLACEHOLDER — AÑEJO · AMBER</div></div>
+            </div></div></div></div>
+        </article>
+        <article class="vchapter is-extra" data-variant="extra" data-theme="noir" data-glb="assets/bottles/extra-anejo.glb">
+          <div class="vchapter-text"><span class="vchapter-no">VARIANT 04</span><h3>Extra Añejo</h3>
+            <p>Thirty-six months. Black cherry, espresso, smoked oak. 1,200 bottles. Then gone.</p>
+            <span class="vchapter-meta">GRAN RESERVA · 36 MO · $185</span></div>
+          <div class="vchapter-bottle"><div class="bottle-slot" data-glb="assets/bottles/extra-anejo.glb" data-variant="extra" data-hover="VIEW">
+            <div class="bottle-3d"><div class="bottle-3d-inner" data-bottle3d="v-extra">
+              <div class="pbottle pbottle--noir"><div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+              <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-highlight secondary"></div>
+              <div class="pbottle-label dark gilt"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Extra Añejo</span><span class="pl-sub">36 MESES · GRAN RESERVA</span></div><div class="pbottle-back-label"></div></div>
+              <div class="pbottle-shadow"></div><div class="pbottle-tag">PLACEHOLDER — EXTRA AÑEJO · NOIR</div></div>
+            </div></div></div></div>
+        </article>
+      </div>
+      <div class="variants-progress"><i id="variantsFill"></i></div>
+    </div>
+    <div class="variants-scrollspace" aria-hidden="true"></div>
+  </section>
+
+  <!-- ================= SECTION 04 — AGAVE / ORIGIN ================= -->
+  <section class="act act-origin" id="origin" data-scene="origin">
+    <div class="origin-inner">
+      <p class="eyebrow light reveal">N°04 — ORIGIN · LOS ALTOS, JALISCO</p>
+      <h2 class="origin-title">
+        <span class="reveal">FROM EARTH</span>
+        <span class="reveal outline">TO SPIRIT.</span>
+      </h2>
+      <p class="origin-lede reveal">Seven years in iron-rich soil. One estate. No shortcuts. Scroll through the land that makes the bottle possible.</p>
+
+      <!-- ImageReveal placeholders: elegant, clearly-marked, parallax-ready -->
+      <div class="media-wall">
+        <figure class="media-xl reveal" data-parallax="0.12">
+          <div class="ph ph-landscape"><span class="ph-tag">IMAGE PLACEHOLDER — AGAVE FIELDS · 16:9 · REPLACE WITH AERIAL STILL</span>
+            <div class="ph-sun"></div><div class="ph-ridges"><i></i><i></i><i></i></div><div class="ph-row"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          <figcaption><b>01 — AGAVE FIELDS</b><span>LOS ALTOS · LATE AFTERNOON · 34°C</span></figcaption>
+        </figure>
+        <div class="media-duo">
+          <figure class="reveal" data-parallax="0.08">
+            <div class="ph ph-portrait"><span class="ph-tag">IMAGE PLACEHOLDER — JIMADOR / HARVEST · 4:5</span><div class="ph-figure"></div></div>
+            <figcaption><b>02 — HARVEST</b><span>JIMA AT DAWN · 5:40 AM</span></figcaption>
+          </figure>
+          <figure class="reveal" data-parallax="0.16">
+            <div class="ph ph-portrait alt"><span class="ph-tag">IMAGE PLACEHOLDER — DISTILLATION / COPPER · 4:5</span><div class="ph-still"></div></div>
+            <figcaption><b>03 — DISTILLATION</b><span>COPPER POT · SINGLE ESTATE</span></figcaption>
+          </figure>
+        </div>
+        <figure class="media-xl reveal" data-parallax="0.1">
+          <!-- Video placeholder -->
+          <div class="ph ph-video"><span class="ph-tag">VIDEO PLACEHOLDER — MEXICAN LANDSCAPE · 21:9 · AUTOPLAY LOOP, MUTED</span>
+            <div class="ph-play"><i></i><span>LANDSCAPE FILM — 00:24 LOOP</span></div></div>
+          <figcaption><b>04 — THE LANDSCAPE</b><span>TEQUILA VALLEY OVERLOOK · N 20°41′ — W 102°20′</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="origin-grid">
+        <div class="origin-copy reveal">
+          <p class="lede">The Highlands give Aguavida its high, floral lift — white pepper, lime leaf, wet stone.</p>
+          <p>We harvest only at full maturity, when the piña holds its sugars like a held breath. Everything after that is restraint.</p>
+        </div>
+        <div class="stat-row mini">
+          <div class="stat reveal"><b>07</b><span>YEARS TO MATURITY</span></div>
+          <div class="stat reveal"><b>100%</b><span>BLUE AGAVE</span></div>
+          <div class="stat reveal"><b>01</b><span>ESTATE</span></div>
+          <div class="stat reveal"><b>2,040</b><span>METRES ALT.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 05 — THE MAKING ================= -->
+  <section class="act act-making" id="making" data-scene="making">
+    <div class="making-inner">
+      <div class="making-left"><div class="making-sticky">
+        <p class="eyebrow reveal">N°05 — THE MAKING · AN INTERACTIVE DOCUMENTARY</p>
+        <h2 class="making-title reveal">Slow<br>by<br><em>design.</em></h2>
+        <div class="timeline"><div class="timeline-track"><i id="timelineFill"></i></div>
+          <ol id="timelineSteps"><li class="on">AGAVE</li><li>HARVEST</li><li>COOK</li><li>DISTIL</li><li>REST</li><li>BOTTLE</li></ol></div>
+        <p class="making-note reveal">One continuous timeline. The current stage steps forward; the last one recedes. The room changes colour as you go.</p>
+      </div></div>
+      <div class="making-right">
+        <article class="mstep" data-stage="AGAVE"><span class="mstep-num">01 / AGAVE</span><h3>Grown, not made.</h3><p>Blue agave, seven years in red earth. Sugar gathered slowly — haste would thin it.</p><div class="ph ph-strip"><span class="ph-tag">IMAGE PLACEHOLDER — BLUE AGAVE CLOSE · 3:1</span></div><span class="mstep-meta">YEARS 1–7 · LOS ALTOS</span></article>
+        <article class="mstep" data-stage="HARVEST"><span class="mstep-num">02 / HARVEST</span><h3>Jima at dawn.</h3><p>Piñas cut by hand before heat. 22–35 kilos each; bitter tips removed, hearts kept.</p><div class="ph ph-strip"><span class="ph-tag">IMAGE PLACEHOLDER — HARVEST / COA · 3:1</span></div><span class="mstep-meta">HAND CUT · 5:40 AM</span></article>
+        <article class="mstep" data-stage="COOK"><span class="mstep-num">03 / COOK</span><h3>Slow-cooked, not rushed.</h3><p>72 hours in stone ovens. Starch turns to honey. Nothing caramelised, nothing burnt.</p><div class="ph ph-strip"><span class="ph-tag">IMAGE PLACEHOLDER — STONE OVEN / HORNO · 3:1</span></div><span class="mstep-meta">MAMPOSTERÍA · 72 H</span></article>
+        <article class="mstep" data-stage="DISTIL"><span class="mstep-num">04 / DISTIL</span><h3>Copper, twice.</h3><p>Open-air ferment on wild yeast, then double-distilled in copper pot stills.</p><div class="ph ph-strip"><span class="ph-tag">IMAGE PLACEHOLDER — COPPER STILL · 3:1</span></div><span class="mstep-meta">ALAMBIQUE · 2× DISTILLED</span></article>
+        <article class="mstep" data-stage="REST"><span class="mstep-num">05 / REST</span><h3>Rested with intent.</h3><p>Blanco in steel; the rest in used French oak — never new, never charred to mask.</p><div class="ph ph-strip"><span class="ph-tag">IMAGE PLACEHOLDER — BARREL ROOM · 3:1</span></div><span class="mstep-meta">ROBLE FRANCÉS · UP TO 36 MO</span></article>
+        <article class="mstep" data-stage="BOTTLE"><span class="mstep-num">06 / BOTTLE</span><h3>Bottled like an object.</h3><p>Flint glass, hand cork, blind-embossed lot. Filled, sealed, numbered — then silence.</p><div class="ph ph-strip"><span class="ph-tag">IMAGE PLACEHOLDER — BOTTLING / CRAFTSMANSHIP · 3:1</span></div><span class="mstep-meta">LOT N° 001 · 40% ALC/VOL</span></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 06 — THE COLLECTION (ensemble) ================= -->
+  <section class="act act-ensemble" id="ensemble" data-scene="ensemble">
+    <div class="ensemble-sticky" id="ensembleSticky">
+      <div class="ensemble-bg" id="ensembleBg"></div>
+      <p class="eyebrow light">N°06 — THE COLLECTION · A STILL LIFE</p>
+      <h2 class="ensemble-title"><span data-ensemble="t1">Four bottles,</span><span data-ensemble="t2"><em>one shadow.</em></span></h2>
+      <!-- Photographic composition: depth, overlap, varying scale — NOT a grid -->
+      <div class="ensemble-stage" id="ensembleStage">
+        <div class="ens-bottle b-extra" data-depth="0.35" data-bottle3d="e-extra">
+          <div class="bottle-slot" data-glb="assets/bottles/extra-anejo.glb" data-variant="extra"><div class="bottle-3d"><div class="bottle-3d-inner">
+            <div class="pbottle pbottle--noir"><div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+            <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-label dark gilt"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Extra</span></div></div>
+            <div class="pbottle-shadow"></div><div class="pbottle-tag">PLACEHOLDER — 04</div></div>
+          </div></div></div><span class="ens-name">EXTRA AÑEJO</span>
+        </div>
+        <div class="ens-bottle b-anejo" data-depth="0.6" data-bottle3d="e-anejo">
+          <div class="bottle-slot" data-glb="assets/bottles/anejo.glb" data-variant="anejo"><div class="bottle-3d"><div class="bottle-3d-inner">
+            <div class="pbottle pbottle--amber"><div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+            <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-label dark"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Añejo</span></div></div>
+            <div class="pbottle-shadow"></div><div class="pbottle-tag">PLACEHOLDER — 03</div></div>
+          </div></div></div><span class="ens-name">AÑEJO</span>
+        </div>
+        <div class="ens-bottle b-blanco" data-depth="1" data-bottle3d="e-blanco">
+          <div class="bottle-slot" data-glb="assets/bottles/blanco.glb" data-variant="blanco" data-hover="VIEW"><div class="bottle-3d"><div class="bottle-3d-inner">
+            <div class="pbottle pbottle--clear"><div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+            <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-highlight secondary"></div>
+            <div class="pbottle-label"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Blanco</span></div></div>
+            <div class="pbottle-shadow"></div><div class="pbottle-tag">PLACEHOLDER — 01 · HERO SCALE</div></div>
+          </div></div></div><span class="ens-name">BLANCO</span>
+        </div>
+        <div class="ens-bottle b-reposado" data-depth="0.8" data-bottle3d="e-reposado">
+          <div class="bottle-slot" data-glb="assets/bottles/reposado.glb" data-variant="reposado"><div class="bottle-3d"><div class="bottle-3d-inner">
+            <div class="pbottle pbottle--gold"><div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+            <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-label dark"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Reposado</span></div></div>
+            <div class="pbottle-shadow"></div><div class="pbottle-tag">PLACEHOLDER — 02</div></div>
+          </div></div></div><span class="ens-name">REPOSADO</span>
+        </div>
+        <div class="ensemble-floor" aria-hidden="true"></div>
+      </div>
+      <p class="ensemble-hint">SCROLL — DEPTH SHIFTS · LIGHT SWEEPS · <a href="#variants">VIEW EACH →</a></p>
+    </div>
+    <div class="ensemble-scrollspace" aria-hidden="true"></div>
+  </section>
+
+  <!-- ================= SECTION 07 — BRAND STATEMENT ================= -->
+  <section class="act act-statement" id="statement" data-scene="statement">
+    <div class="statement-inner">
+      <p class="eyebrow reveal">N°07 — STATEMENT</p>
+      <h2 class="statement-title" aria-label="Made for the moments that matter">
+        <span class="reveal">MADE FOR</span>
+        <span class="reveal"><em>THE MOMENTS</em></span>
+        <span class="reveal outline">THAT MATTER.</span>
+      </h2>
+      <p class="statement-sub reveal">No garnish. No performance. Just agave, time, and the people you keep.</p>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 08 — FINAL PRODUCT MOMENT ================= -->
+  <section class="act act-final" id="final" data-scene="final">
+    <div class="final-sticky" id="finalSticky">
+      <div class="final-bg" id="finalBg"></div>
+      <div class="final-light" id="finalLight"></div>
+      <p class="eyebrow light" data-final="eyebrow">N°08 — THE RETURN · BLANCO, CENTRE STAGE</p>
+      <div class="final-grid">
+        <div class="final-copy">
+          <h2 data-final="title">Discover<br><em>Aguavida.</em></h2>
+          <ul class="final-specs" data-final="specs">
+            <li><b>EXPRESSION</b>BLANCO — LOT N° 001</li>
+            <li><b>AGAVE</b>100% BLUE · SINGLE ESTATE</li>
+            <li><b>PROFILE</b>LIME LEAF / PEPPER / STONE</li>
+            <li><b>BOTTLE</b>750 ML · 40% ALC/VOL</li>
+          </ul>
+          <div class="final-ctas" data-final="ctas">
+            <a class="cta-solid" href="#contact" data-hover="SHOP">DISCOVER AGUAVIDA →</a>
+            <a class="cta-ghost" href="#variants" data-hover="VIEW">COMPARE ALL FOUR</a>
+          </div>
+        </div>
+        <div class="final-bottle" data-final="bottle">
+          <div class="bottle-slot large" data-glb="assets/bottles/blanco.glb" data-variant="blanco" data-lighting="finale-sweep" data-environment="amber-glow" data-hover="SHOP">
+            <div class="bottle-3d"><div class="bottle-3d-inner" data-bottle3d="final">
+              <div class="pbottle pbottle--clear pbottle--xl">
+                <div class="pbottle-cap"></div><div class="pbottle-neck"></div><div class="pbottle-shoulder"></div>
+                <div class="pbottle-body"><div class="pbottle-glass-shade"></div><div class="pbottle-highlight"></div><div class="pbottle-highlight secondary"></div>
+                  <div class="pbottle-label"><span class="pl-eyebrow">AGUAVIDA</span><span class="pl-name">Blanco</span><span class="pl-sub">100% AGAVE AZUL</span></div>
+                  <div class="pbottle-back-label"></div></div>
+                <div class="pbottle-shadow"></div>
+                <div class="pbottle-tag">BOTTLE PLACEHOLDER — FINALE · MOVES TOWARD CTA</div>
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+      <div class="final-progress"><i id="finalFill"></i></div>
+    </div>
+    <div class="final-scrollspace" aria-hidden="true"></div>
+  </section>
+
+  <!-- ================= CONTACT / FOOTER ================= -->
+  <footer class="act finale" id="contact" data-scene="contact">
+    <div class="finale-inner">
+      <p class="eyebrow light reveal">CONTACT — HECHO EN MÉXICO</p>
+      <h2 class="finale-title"><span class="reveal">Drink</span><span class="reveal"><em>deliberately.</em></span></h2>
+      <form class="finale-form reveal" id="listForm">
+        <label for="email">FIRST POUR — PRIVATE ALLOCATIONS</label>
+        <div class="field"><input id="email" type="email" placeholder="your@email.com" required><button type="submit">JOIN →</button></div>
+        <small id="formMsg">One letter per season. No noise.</small>
+      </form>
+      <div class="finale-grid">
+        <div>AGUAVIDA TEQUILA<br>CAMINO AL CERRITO 1120<br>JALISCO, MX</div>
+        <div><a href="#variants">Collection</a><a href="#origin">Story</a><a href="#making">Craft</a><a href="#contact">Contact</a></div>
+        <div>PLEASE SIP RESPONSIBLY.<br>40% ALC/VOL · 21+ ONLY.<br>© 2026 AGUAVIDA.</div>
+      </div>
+      <div class="finale-word" aria-hidden="true">AGUAVIDA</div>
+    </div>
+  </footer>
+
+</main>
+<script src="app.js"></script>
+</body>
+</html>
