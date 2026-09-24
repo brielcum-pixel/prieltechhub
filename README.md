@@ -14,6 +14,23 @@ npm start
 npm run typecheck
 ```
 
+## Deploy to Cloudflare
+
+The site ships to Cloudflare Workers via the OpenNext adapter — no local
+Node.js needed if you build in the cloud (StackBlitz terminal or the
+Cloudflare dashboard both work).
+
+```bash
+npm install
+npm run cf:preview  # local preview of the Worker build
+npm run cf:deploy   # deploy (needs `wrangler login`)
+```
+
+Git-connected deploy (recommended): Cloudflare dashboard → Workers & Pages →
+Create → connect the `prieltechhub` GitHub repo → build command
+`npx opennextjs-cloudflare build`, deploy command
+`npx opennextjs-cloudflare deploy`. Cloudflare builds on every push to `main`.
+
 ## Replace with your real content
 
 | What | Where |

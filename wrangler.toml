@@ -1,0 +1,11 @@
+# Cloudflare Worker config for prieltechhub (built via @opennextjs/cloudflare).
+# The adapter outputs the worker + static assets into .open-next/ on build.
+name = "prieltechhub"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+main = ".open-next/worker.js"
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
