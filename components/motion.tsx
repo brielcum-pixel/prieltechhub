@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -71,4 +72,17 @@ export function AnimatedLines({ lines, className }: { lines: string[]; className
       ))}
     </span>
   );
+}
+
+/**
+ * HydrationGuard cancels the no-JS fallback timer (see layout) as soon as
+ * React mounts. If the bundle never runs, the timer fires and forces
+ * motion-hidden content visible via CSS — the page stays readable.
+ */
+export function HydrationGuard() {
+  useEffect(() => {
+    (window as unknown as { __cancelMotionFallback?: () => void }).__cancelMotionFallback?.();
+    document.documentElement.classList.add("hydrated");
+  }, []);
+  return null;
 }

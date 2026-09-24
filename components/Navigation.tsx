@@ -8,7 +8,8 @@ import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
-  const pathname = usePathname();
+  const rawPath = usePathname();
+  const pathname = rawPath ?? "/";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 

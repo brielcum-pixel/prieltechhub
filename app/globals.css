@@ -85,6 +85,15 @@ body {
   text-wrap: balance;
 }
 
+/* Fallback: if the JS bundle never hydrates, the layout's timer adds
+   .motion-fallback to <html> and this forces animation-hidden content
+   visible. Cancelled automatically once React mounts. */
+.motion-fallback [style*="opacity: 0"],
+.motion-fallback [style*="opacity:0"] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
